@@ -40,10 +40,10 @@ def process_json():
         to_predict = np.array([year, month] + input_encoded)
 
         # Make predictions using the loaded model
-        predictions = model.predict(to_predict.reshape(1, -1))
+        predictions = model_rf.predict(to_predict.reshape(1, -1))
 
        # Return results
-        return jsonify({'prediction': predictions[0]})
+        return jsonify({'prediction': round(predictions[0])})
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
