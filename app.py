@@ -7,24 +7,20 @@ import pickle
 
 
 # Load the model
-model_rf = joblib.load('rf_model.pkl')
+model_rf = joblib.load('rf_new_model.pkl')
 
 # Load the preprocessing steps
 enc = pickle.load(open('encoder.pickle', 'rb'))
 
 app = Flask(__name__)
 
-@app.route("/process_json", methods=["POST"])
+@app.route("/accident_predictions", methods=["POST"])
 def process_json():
     try:
         # Get the input data from the request
         input_data = request.get_json()
 
-        # Convert 'year' and 'month' to Pandas Timestamp objects
-        input_data['year'] = pd.to_datetime(input_data['year'], format='%Y').year
-        input_data['month'] = pd.to_datetime(input_data['month'], format='%m').month
-
-        # Access to all features directly
+        # Access to all features from the input_data
         category = str(input_data['category'])
         type = str(input_data['type'])
         year = input_data['year']
